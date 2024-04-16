@@ -43,7 +43,7 @@ describe("Question 1: Using Regular Expression Function .test()", () => {
   });
 });
 
-describe("Question 2. Using Regular Expression Function .match()", () => {
+describe("Question 2: Using Regular Expression Function .match()", () => {
   test("findWordsWithVowels should return all words containing vowels", () => {
     expect(findWordsWithVowels("This is an example.")).toEqual([
       "this",
@@ -70,7 +70,7 @@ describe("Question 2. Using Regular Expression Function .match()", () => {
   });
 });
 
-describe("formatProductNames", () => {
+describe("Question 3: formatProductNames", () => {
   it("should correctly transform product names into objects", () => {
     const products = ["shoes", "women's cloth", "canon camera lens"];
     const expected = [

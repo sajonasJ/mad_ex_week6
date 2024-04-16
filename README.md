@@ -31,11 +31,19 @@ This project includes several files; three require your attention:
 
 ### Check your work
 
-After making changes to `questions.js`, run the following command to test your work:
+After updating the `questions.js` file, use the command below to execute all tests and verify your changes:
 
 ```bash
 npm test
 ```
+
+To run tests for individual questions, you can use specific commands as shown below. This approach allows you to focus on a single question at a time:
+
+```bash
+npm run test1
+```
+
+There are five separate tests available, corresponding to each question: `test1`, `test2`, `test3`, `test4`, and `test5`. Each command will run the tests related to a specific question, allowing targeted testing and debugging.
 
 If all tests pass (everything is green), congratulations, you've successfully completed the exercises! If there are any failures (red), read the error messages to identify the issue and make necessary corrections in questions.js.
 
