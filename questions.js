@@ -29,15 +29,15 @@
 // 3. validPlate - Check if the input string is a valid license plate with the format: Three uppercase letters followed by three digits.
 
 function containDigit(str) {
-  // Write your implementation
+  return /\d+/.test(str);
 }
 
 function containCapital(str) {
-  // Write your implementation
+  return /[A-Z]+/.test(str);
 }
 
 function validPlate(str) {
-  // Write your implementation
+  return /^[A-Z]{3}\d{3}$/.test(str);
 }
 
 // Question 2 Using Regular Expression Function `.match()`
@@ -47,14 +47,13 @@ function validPlate(str) {
 // [note]: All these questions are case-insensitive, and the returned words should be
 // in lowercase. For instance, both "My" and "my" should return "my"
 function findWordsWithVowels(str) {
-  // Write your implementation
+  return str.toLowerCase().match(/[a-z]*[aeiuo][a-z]*/gi) || [];
 }
 function findWordsEndingWithDigit(str) {
-  // Write your implementation
+  return str.match(/[a-z]*\d+/gi) || [];
 }
-
 function findWordsWithPattern(str) {
-  // Write your implementation
+  return str.match(/\b[bkdl][a-z]*e/gi) || [];
 }
 
 // Question 3: Format an array of product strings into an array of objects with 'id' and 'title' properties.
@@ -67,16 +66,47 @@ function findWordsWithPattern(str) {
 //    { id: 'shoes', title: 'Shoes' },
 //    { id: 'womensCloth', title: "Women's Cloth" }
 // ]
-function formatProductNames(products) {
-  // Write your implementation
-}
 
+//? function formatProductNames(products) {
+//*   return products.map((product) => ({
+//*     id: product
+//*       .replace(/[^a-z ]/gi, "")
+//*       .split(" ")
+//*       .map((word, index) =>
+//*         index === 0
+//*           ? word.toLowerCase()
+//*           : word[0].toUpperCase() + word.slice(1).toLowerCase()
+//*       )
+//*       .join(""),
+//*     title: product.replace(/(^[a-z])| [a-z]/g, (word) =>
+//*       word[0] === " " ? ` ${word[1].toUpperCase()}` : `${word[0].toUpperCase()}`
+//*     ),
+//*   }));
+//* }
+
+function formatProductNames(products) {
+  return products.map((product) => {
+    let newProduct = product.replace(/[^a-z ]/gi, "");
+    let newID = newProduct
+      .split(" ")
+      .map((word, index) =>
+        index === 0
+          ? word.toLowerCase()
+          : word[0].toUpperCase() + word.slice(1).toLowerCase()
+      )
+      .join("");
+    let newTitle = product.replace(/(^[a-z]| [a-z])/g, (word) =>
+      word[0] === " " ? ` ${word[1].toUpperCase()}` : `${word[0].toUpperCase()}`
+    );
+    return { id: newID, title: newTitle };
+  });
+}
 // Question 4: Write an asynchronous function `getCategories` that retrieves a list of categories from the Fake Store API.
 // The function should make a network request to 'https://fakestoreapi.com/products/categories' and return an array of category strings provided by the API.
 // This function should use async/await for handling asynchronous operations.
 // Note: you can find the api documents at: https://fakestoreapi.com/docs
 async function getCategories() {
-  // Write your implementation
+  return (await fetch("https://fakestoreapi.com/products/categories")).json();
 }
 
 // Question 5: Write an asynchronous function `getGoodProducts` that retrieves products from a specified category with a rating equal to or higher than a given minimum.
@@ -86,7 +116,18 @@ async function getCategories() {
 // You should use high order array function map and filter.
 // Note: you can find the api documents at: https://fakestoreapi.com/docs
 async function getGoodProducts(category, minRate) {
-  // Write your implementation
+  const data = await (await fetch("https://fakestoreapi.com/products/")).json();
+  return data
+    .filter(
+      (product) =>
+        product.category === category && product.rating.rate >= minRate
+    )
+    .map((product) => ({
+      id: product.id,
+      rate: product.rating.rate,
+      title: product.title,
+      price: product.price,
+    }));
 }
 
 module.exports = {
